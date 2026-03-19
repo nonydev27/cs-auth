@@ -142,7 +142,7 @@ body {
   font-size: 2.2rem;
   font-weight: 800;
   letter-spacing: 0.15em;
-  background: linear-gradient(135deg, var(--pure-white) 0%, var(--accent-yellow) 50%, var(--secondary-blue) 100%);
+  background: var(--accent-yellow);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -278,7 +278,7 @@ body {
   font-size: 1.25rem;
   font-weight: 600;
   text-align: center;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
 }
 

@@ -688,7 +688,7 @@ const EXCEL_DATA = [
 ];
 
 // Admin WhatsApp number (with country code, no +)
-const ADMIN_WHATSAPP = "233500000000"; // Replace with your actual WhatsApp number
+const ADMIN_WHATSAPP = "233207384908"; // Replace with your actual WhatsApp number
 
 function App() {
   const [referenceNumber, setReferenceNumber] = useState('');
