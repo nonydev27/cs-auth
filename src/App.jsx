@@ -916,7 +916,7 @@ function App() {
       )}
 
       <footer className="footer">
-        <p>© 2026 Computer Science 2028 • All Rights Reserved</p>
+        <p>© Karl Djansi [Nonydev] • Computer Science 2028 • All Rights Reserved</p>
       </footer>
     </div>
   );
