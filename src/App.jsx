@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './App.css';
 
 // Excel data - Admin: Reference numbers with names
@@ -156,14 +156,14 @@ const EXCEL_DATA = [
   { "Reference Number": "21026377", "Name": "Essel Kofi ERIC" },
   { "Reference Number": "21027127", "Name": "Kojo TUFUOR-GYAMFI" },
   { "Reference Number": "21027591", "Name": "Perry AMOO-ADEGOKE" },
-  { "Reference Number": "21028918", "Name": "Jeffery Ankamah OBOUR" },
+  { "Reference Number": "21028918", "Name": "Jeffery Anamah OBOUR" },
   { "Reference Number": "21029311", "Name": "Alwin Adusei TENKORANG" },
   { "Reference Number": "21030454", "Name": "Kwabena Mensah SARPONG" },
   { "Reference Number": "21031648", "Name": "Joseph Yiadom BOAKYE" },
   { "Reference Number": "21033251", "Name": "Kojo Gyimah ANTWI-BOASIAKO" },
   { "Reference Number": "21033715", "Name": "Van-Ike Boye ABBEY" },
   { "Reference Number": "21034470", "Name": "Klortia Okai ANKU" },
-  { "Reference Number": "21036779", "Name": "Yasir Baseikiyya IDDRISU" },
+  { "Reference Number": "21036779", "Name": "Yasir Basekiyya IDDRISU" },
   { "Reference Number": "21048800", "Name": "Isaac GLOVER LARTEY" },
   { "Reference Number": "21071497", "Name": "Jermaine OHENE-KARIKARI" },
   { "Reference Number": "21071529", "Name": "Barima Sarpong AFRIYIE" },
@@ -584,9 +584,8 @@ const EXCEL_DATA = [
   { "Reference Number": "21148790", "Name": "Clifford Kwabena AKOSAH" },
   { "Reference Number": "21148803", "Name": "Wilfred Okai OBENG" },
   { "Reference Number": "21148835", "Name": "Nigel Kwarteng DARKWA" },
-  { "Reference Number": "21049056", "Name": "Kwasi Gyamfi FORDJOUR" },
-  { "Reference Number": "21149217", "Name": "Louis Mawulolo DALIESOR" },
-  { "Reference Number": "21149282", "Name": "Prince BORKETEY" },
+  { "Reference Number": "21149217", "Name": "Kwasi Gyamfi FORDJOUR" },
+  { "Reference Number": "21149282", "Name": "Louis Mawulolo DALIESOR" },
   { "Reference Number": "21149444", "Name": "Samuel Boadi AMPOMAH" },
   { "Reference Number": "21149544", "Name": "Prince Degbe AMOAH" },
   { "Reference Number": "21149554", "Name": "Mawuenam Kofi ANYAWOE" },
@@ -688,19 +687,46 @@ const EXCEL_DATA = [
   { "Reference Number": "20822656", "Name": "Lloyd AIKINS" },
 ];
 
+// Admin WhatsApp number (with country code, no +)
+const ADMIN_WHATSAPP = "233500000000"; // Replace with your actual WhatsApp number
+
 function App() {
   const [referenceNumber, setReferenceNumber] = useState('');
   const [status, setStatus] = useState('idle');
   const [errorMessage, setErrorMessage] = useState('');
   const [userData, setUserData] = useState(null);
-  const [whatsappLink, setWhatsappLink] = useState('');
+  const [alreadyUsed, setAlreadyUsed] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  
+  // Load used indices from localStorage
+  const [usedIndices, setUsedIndices] = useState(() => {
+    const saved = localStorage.getItem('cs2028_used_indices');
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem('cs2028_used_indices', JSON.stringify(usedIndices));
+  }, [usedIndices]);
 
   const handleInputChange = (e) => {
     setReferenceNumber(e.target.value.toUpperCase());
+    setErrorMessage('');
+    setAlreadyUsed(false);
   };
 
   const validateReference = () => {
+    // Check if already used
+    if (usedIndices.includes(referenceNumber.trim())) {
+      const student = EXCEL_DATA.find(row => 
+        String(row['Reference Number']).trim().toUpperCase() === String(referenceNumber).trim().toUpperCase()
+      );
+      return { 
+        valid: false, 
+        alreadyUsed: true,
+        name: student ? student['Name'] : 'Student'
+      };
+    }
+
     const found = EXCEL_DATA.find(row => {
       const refValue = row['Reference Number'] || row['Reference'] || row['reference'] || row['ReferenceNumber'];
       return String(refValue).trim().toUpperCase() === String(referenceNumber).trim().toUpperCase();
@@ -709,15 +735,9 @@ function App() {
     if (found) {
       const name = found['Name'] || found['name'] || found['NAME'] || 'Student';
       
-      // WhatsApp group links - replace with your actual links
-      const group1Link = 'https://chat.whatsapp.com/YOUR_GROUP1_LINK';
-      const group2Link = 'https://chat.whatsapp.com/YOUR_GROUP2_LINK';
-      
       return {
         valid: true,
-        name: name,
-        group: '1', // Default to group 1, can be customized
-        link: group1Link
+        name: name
       };
     }
 
@@ -734,11 +754,17 @@ function App() {
       
       if (result.valid) {
         setUserData({
-          name: result.name,
-          group: result.group
+          name: result.name
         });
-        setWhatsappLink(result.link);
+        setUsedIndices(prev => [...prev, referenceNumber.trim().toUpperCase()]);
         setStatus('success');
+        setShowSuccessModal(true);
+      } else if (result.alreadyUsed) {
+        setAlreadyUsed(true);
+        setUserData({
+          name: result.name
+        });
+        setStatus('alreadyUsed');
         setShowSuccessModal(true);
       } else {
         setStatus('error');
@@ -751,7 +777,13 @@ function App() {
     setShowSuccessModal(false);
     setReferenceNumber('');
     setUserData(null);
+    setAlreadyUsed(false);
     setStatus('idle');
+  };
+
+  const getWhatsAppLink = (name) => {
+    const message = `Hello please I'm here for help, my name is: ${name}`;
+    return `https://wa.me/${ADMIN_WHATSAPP}?text=${encodeURIComponent(message)}`;
   };
 
   return (
@@ -827,29 +859,54 @@ function App() {
       {showSuccessModal && (
         <div className="modal-overlay" onClick={closeModal}>
           <div className="modal-content success-modal" onClick={e => e.stopPropagation()}>
-            <div className="success-icon">🎉</div>
-            <h2>Verification Successful!</h2>
-            
-            <div className="user-info-display">
-              <p className="welcome-text">Welcome,</p>
-              <p className="user-name">{userData?.name}</p>
-              <div className="group-badge">
-                Group {userData?.group}
-              </div>
-            </div>
-            
-            <div className="whatsapp-section">
-              <p>Click below to join your WhatsApp group:</p>
-              <a 
-                href={whatsappLink} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="whatsapp-btn"
-              >
-                <span>💬</span>
-                Join WhatsApp Group
-              </a>
-            </div>
+            {alreadyUsed ? (
+              <>
+                <div className="error-icon-large">⚠️</div>
+                <h2>Already Verified!</h2>
+                
+                <div className="user-info-display">
+                  <p className="welcome-text">Welcome back,</p>
+                  <p className="user-name">{userData?.name}</p>
+                </div>
+                
+                <div className="whatsapp-section">
+                  <p>You've already verified. Need help?</p>
+                  <a 
+                    href={getWhatsAppLink(userData?.name)}
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="whatsapp-btn reach-out-btn"
+                  >
+                    <span>💬</span>
+                    Reach Out
+                  </a>
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="success-icon">🎉</div>
+                <h2>Verification Successful!</h2>
+                
+                <div className="user-info-display">
+                  <p className="welcome-text">Welcome,</p>
+                  <p className="user-name">{userData?.name}</p>
+                </div>
+                
+                <div className="whatsapp-section">
+                  <p>Click below to join your WhatsApp group:</p>
+                  <a 
+                    href="https://chat.whatsapp.com/H2YSqPFEjYK0MxxxNqLUJo"
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="whatsapp-btn"
+                    onClick={closeModal}
+                  >
+                    <span>💬</span>
+                    Join WhatsApp Group
+                  </a>
+                </div>
+              </>
+            )}
 
             <button className="close-modal-btn" onClick={closeModal}>
               Close

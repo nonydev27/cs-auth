@@ -307,6 +307,12 @@ body {
   font-size: 1.25rem;
 }
 
+.error-icon-large {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  color: var(--accent-yellow);
+}
+
 /* Submit Button */
 .submit-btn {
   width: 100%;
