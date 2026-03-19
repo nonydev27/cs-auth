@@ -1,21 +1,21 @@
 /* CSS Variables - Color Scheme */
 :root {
-  --primary-green: #00ff87;
-  --secondary-green: #00cc6a;
-  --dark-green: #00a854;
-  --accent-yellow: #ffe600;
-  --bright-yellow: #fff200;
-  --pure-white: #ffffff;
-  --off-white: #f8fff8;
-  --light-green: #e0fff0;
-  --dark-bg: #0a0a0a;
-  --card-bg: rgba(255, 255, 255, 0.08);
-  --card-border: rgba(255, 255, 255, 0.15);
-  --text-primary: #ffffff;
-  --text-secondary: rgba(255, 255, 255, 0.7);
-  --error-red: #ff4757;
-  --glow-green: 0 0 30px rgba(0, 255, 135, 0.4);
-  --glow-yellow: 0 0 30px rgba(255, 230, 0, 0.4);
+  --primary-dark: #1A3263;
+  --secondary-blue: #547792;
+  --accent-yellow: #FAB95B;
+  --bright-yellow: #FFD166;
+  --pure-white: #E8E2DB;
+  --off-white: #f5f3f0;
+  --light-bg: #d4cfc7;
+  --dark-bg: #0d1520;
+  --card-bg: rgba(26, 50, 99, 0.85);
+  --card-border: rgba(250, 185, 91, 0.3);
+  --text-primary: #E8E2DB;
+  --text-secondary: rgba(232, 226, 219, 0.7);
+  --text-dark: #1A3263;
+  --error-red: #ff6b6b;
+  --glow-yellow: 0 0 30px rgba(250, 185, 91, 0.4);
+  --glow-blue: 0 0 30px rgba(84, 119, 146, 0.4);
 }
 
 /* Reset & Base */
@@ -58,15 +58,15 @@ body {
 .orb {
   position: absolute;
   border-radius: 50%;
-  filter: blur(80px);
-  opacity: 0.5;
+  filter: blur(100px);
+  opacity: 0.4;
   animation: float 20s ease-in-out infinite;
 }
 
 .orb-1 {
   width: 600px;
   height: 600px;
-  background: radial-gradient(circle, var(--primary-green) 0%, transparent 70%);
+  background: radial-gradient(circle, var(--primary-dark) 0%, transparent 70%);
   top: -200px;
   left: -200px;
   animation-delay: 0s;
@@ -84,7 +84,7 @@ body {
 .orb-3 {
   width: 400px;
   height: 400px;
-  background: radial-gradient(circle, var(--secondary-green) 0%, transparent 70%);
+  background: radial-gradient(circle, var(--secondary-blue) 0%, transparent 70%);
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -130,11 +130,11 @@ body {
 @keyframes pulse {
   0%, 100% {
     transform: scale(1);
-    filter: drop-shadow(0 0 10px var(--primary-green));
+    filter: drop-shadow(0 0 10px var(--accent-yellow));
   }
   50% {
     transform: scale(1.1);
-    filter: drop-shadow(0 0 20px var(--primary-green));
+    filter: drop-shadow(0 0 20px var(--accent-yellow));
   }
 }
 
@@ -142,7 +142,7 @@ body {
   font-size: 2.2rem;
   font-weight: 800;
   letter-spacing: 0.15em;
-  background: linear-gradient(135deg, var(--pure-white) 0%, var(--primary-green) 50%, var(--accent-yellow) 100%);
+  background: linear-gradient(135deg, var(--pure-white) 0%, var(--accent-yellow) 50%, var(--secondary-blue) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -192,7 +192,7 @@ body {
 .header-accent {
   width: 60px;
   height: 4px;
-  background: linear-gradient(90deg, var(--primary-green), var(--accent-yellow));
+  background: linear-gradient(90deg, var(--accent-yellow), var(--secondary-blue));
   margin: 0 auto 1rem;
   border-radius: 2px;
 }
@@ -201,42 +201,6 @@ body {
   font-size: 1.5rem;
   font-weight: 600;
   color: var(--text-primary);
-}
-
-/* Excel Upload Section */
-.excel-upload-section {
-  margin-bottom: 1.5rem;
-  padding: 1rem;
-  background: rgba(0, 255, 135, 0.05);
-  border: 1px dashed var(--primary-green);
-  border-radius: 12px;
-}
-
-.upload-label {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  cursor: pointer;
-  color: var(--primary-green);
-  font-weight: 500;
-  transition: all 0.3s ease;
-}
-
-.upload-label:hover {
-  color: var(--accent-yellow);
-}
-
-.file-input {
-  display: none;
-}
-
-.file-status {
-  margin-top: 0.75rem;
-  padding: 0.5rem 0.75rem;
-  background: rgba(0, 255, 135, 0.15);
-  border-radius: 8px;
-  font-size: 0.875rem;
-  color: var(--primary-green);
 }
 
 /* Form */
@@ -275,8 +239,8 @@ body {
 .form-select {
   width: 100%;
   padding: 0.875rem 1rem;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid var(--card-border);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(250, 185, 91, 0.2);
   border-radius: 12px;
   color: var(--text-primary);
   font-size: 1rem;
@@ -286,27 +250,27 @@ body {
 }
 
 .form-input::placeholder {
-  color: rgba(255, 255, 255, 0.3);
+  color: rgba(232, 226, 219, 0.4);
 }
 
 .form-input:focus,
 .form-select:focus {
-  border-color: var(--primary-green);
-  box-shadow: 0 0 0 3px rgba(0, 255, 135, 0.1);
-  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--accent-yellow);
+  box-shadow: 0 0 0 3px rgba(250, 185, 91, 0.15);
+  background: rgba(255, 255, 255, 0.12);
 }
 
 .form-select {
   cursor: pointer;
   appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23ffffff' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23E8E2DB' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 1rem center;
   padding-right: 2.5rem;
 }
 
 .form-select option {
-  background: var(--dark-bg);
+  background: var(--primary-dark);
   color: var(--text-primary);
 }
 
@@ -325,8 +289,8 @@ body {
   justify-content: center;
   gap: 0.5rem;
   padding: 1rem;
-  background: rgba(255, 71, 87, 0.1);
-  border: 1px solid rgba(255, 71, 87, 0.3);
+  background: rgba(255, 107, 107, 0.1);
+  border: 1px solid rgba(255, 107, 107, 0.3);
   border-radius: 12px;
   color: var(--error-red);
   font-weight: 500;
@@ -347,10 +311,10 @@ body {
 .submit-btn {
   width: 100%;
   padding: 1rem 2rem;
-  background: linear-gradient(135deg, var(--primary-green) 0%, var(--secondary-green) 100%);
+  background: linear-gradient(135deg, var(--accent-yellow) 0%, #e5a84b 100%);
   border: none;
   border-radius: 12px;
-  color: var(--dark-bg);
+  color: var(--text-dark);
   font-size: 1.1rem;
   font-weight: 700;
   cursor: pointer;
@@ -366,7 +330,7 @@ body {
 
 .submit-btn:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: var(--glow-green);
+  box-shadow: var(--glow-yellow);
 }
 
 .submit-btn:active:not(:disabled) {
@@ -392,7 +356,7 @@ body {
   width: 20px;
   height: 20px;
   border: 2px solid transparent;
-  border-top-color: var(--dark-bg);
+  border-top-color: var(--text-dark);
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
 }
@@ -470,7 +434,7 @@ body {
 .success-modal h2 {
   font-size: 1.75rem;
   margin-bottom: 1rem;
-  color: var(--primary-green);
+  color: var(--accent-yellow);
 }
 
 .success-modal p {
@@ -482,12 +446,35 @@ body {
   color: var(--text-primary);
 }
 
-.group-info {
+.user-info-display {
+  margin: 1.5rem 0;
+  padding: 1.5rem;
+  background: rgba(250, 185, 91, 0.1);
+  border-radius: 16px;
+  border: 1px solid rgba(250, 185, 91, 0.2);
+}
+
+.welcome-text {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.25rem;
+}
+
+.user-name {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--accent-yellow);
+  margin-bottom: 1rem;
+}
+
+.group-badge {
+  display: inline-block;
+  padding: 0.5rem 1.5rem;
+  background: linear-gradient(135deg, var(--secondary-blue), var(--primary-dark));
+  border-radius: 20px;
   font-size: 1.1rem;
-  padding: 0.75rem;
-  background: rgba(0, 255, 135, 0.1);
-  border-radius: 8px;
-  margin: 1rem 0;
+  font-weight: 600;
+  color: var(--pure-white);
 }
 
 .whatsapp-section {
@@ -528,15 +515,15 @@ body {
 }
 
 .close-modal-btn:hover {
-  border-color: var(--primary-green);
-  color: var(--primary-green);
+  border-color: var(--accent-yellow);
+  color: var(--accent-yellow);
 }
 
 /* Footer */
 .footer {
   margin-top: 3rem;
   text-align: center;
-  color: rgba(255, 255, 255, 0.3);
+  color: rgba(232, 226, 219, 0.3);
   font-size: 0.875rem;
   position: relative;
   z-index: 1;
