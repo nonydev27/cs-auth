@@ -798,7 +798,7 @@ function App() {
         <div className="logo-container">
           <div className="logo-icon">⚛</div>
           <h1>COMPUTER SCIENCE</h1>
-          <h2>2028 AUTH</h2>
+          <h2>OFFICIAL GROUP</h2>
         </div>
         <p className="tagline">Enter your reference number to verify</p>
       </header>
@@ -877,7 +877,7 @@ function App() {
                     rel="noopener noreferrer"
                     className="whatsapp-btn reach-out-btn"
                   >
-                    <span>💬</span>
+                    <span></span>
                     Reach Out
                   </a>
                 </div>
@@ -893,7 +893,7 @@ function App() {
                 </div>
                 
                 <div className="whatsapp-section">
-                  <p>Click below to join your WhatsApp group:</p>
+                  <p>Click the link below to join the group:</p>
                   <a 
                     href="https://chat.whatsapp.com/H2YSqPFEjYK0MxxxNqLUJo"
                     target="_blank" 
@@ -901,7 +901,7 @@ function App() {
                     className="whatsapp-btn"
                     onClick={closeModal}
                   >
-                    <span>💬</span>
+                    {/* <span>💬</span> */}
                     Join WhatsApp Group
                   </a>
                 </div>
